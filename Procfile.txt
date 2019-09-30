@@ -1,1 +1,1 @@
-web: gunicorn doanchuyennganh.wsgi --log-file -
+web: gunicorn doanchuyennganh.wsgi
