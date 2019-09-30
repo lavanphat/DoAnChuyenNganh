@@ -1,1 +1,1 @@
-web: gunicorn OilProject_Django-master.py
+web: gunicorn OilProject_Django-master.wsgi --log-file -
