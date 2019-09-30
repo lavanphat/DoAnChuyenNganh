@@ -1,1 +1,1 @@
-web: gunicorn OilProject_Django-master.wsgi
+web: gunicorn OilProject_Django-master.py
