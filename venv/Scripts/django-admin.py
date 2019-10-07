@@ -1,4 +1,4 @@
-#!C:\Users\VanPhat\Desktop\OilProject\venv\Scripts\python.exe
+#!D:\Download\OilProject_Django-master\OilProject_Django-master\venv\Scripts\python.exe
 from django.core import management
 
 if __name__ == "__main__":

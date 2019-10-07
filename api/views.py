@@ -8,3 +8,8 @@ class BannerViewSet(ModelViewSet):
     serializer_class = BannerSerializer
     queryset = Banner.objects.all()
     http_method_names = ['get',]
+
+class CategoryViewSet(ModelViewSet):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+    http_method_names = ['get',]
