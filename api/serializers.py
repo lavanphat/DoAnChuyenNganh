@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from product.models import Banner,Category
+from product.models import Banner, Category, Product, Image_Product
 
 
 class BannerSerializer(serializers.ModelSerializer):
@@ -13,3 +13,17 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = '__all__'
+
+
+class ImageProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image_Product
+        fields = ['Image', 'Image_URL']
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    image_product = ImageProductSerializer(many=True,read_only=True)
+
+    class Meta:
+        model = Product
+        fields = ['id', 'title', 'Price_New', 'image_product']

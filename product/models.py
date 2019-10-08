@@ -70,14 +70,18 @@ class Service(models.Model):
 
 
 class Banner(models.Model):
-    Image = models.CharField(verbose_name='Banner',max_length=1000)
-    Number = models.IntegerField(blank=True,null=True,validators=[MinValueValidator(1), MaxValueValidator(3)],unique=True)
+    Image = models.CharField(verbose_name='Banner', max_length=1000)
+    Number = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(1), MaxValueValidator(3)],
+                                 unique=True)
 
 
 class Image_Product(models.Model):
-    Product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    Image = models.ImageField(verbose_name='Hình Sản Phẩm', upload_to='images/')
+    Product = models.ForeignKey(Product, on_delete=models.CASCADE,related_name='image_product')
+    Image = models.ImageField(verbose_name='Hình Sản Phẩm', upload_to='images/',null=True,blank=True)
     Image_URL = models.CharField(max_length=255, verbose_name='Link Hình', blank=True, null=True)
+
+    def __str__(self):
+        return self.Image_URL
 
 
 def slug_pre_save(sender, instance, *args, **kwargs):
