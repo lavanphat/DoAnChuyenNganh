@@ -20,3 +20,9 @@ class ProductFeaturedViewSet(ModelViewSet):
     serializer_class = ProductSerializer
     queryset = Product.objects.filter(Active=True).order_by('-Date_Create')[:10]
     http_method_names = ['get', ]
+
+
+class BrandViewSet(ModelViewSet):
+    serializer_class = BrandSerializer
+    queryset = Brand.objects.all()
+    http_method_names = ['get', ]
