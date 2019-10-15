@@ -36,7 +36,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     Brand = models.ForeignKey(Brand, on_delete=models.CASCADE, verbose_name='Thương Hiệu')
-    Category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Loại', blank=True, null=True)
+    Category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Loại', blank=True, null=True,related_name='product')
     title = models.CharField(max_length=255, verbose_name='Tên Sản Phẩm')
     slug = models.SlugField(verbose_name='Từ Khóa Sản Phẩm', unique=True, blank=True)
     Price_Import = models.DecimalField(verbose_name='Giá Nhập Hàng', decimal_places=0, max_digits=10)
@@ -76,12 +76,12 @@ class Banner(models.Model):
 
 
 class Image_Product(models.Model):
-    Product = models.ForeignKey(Product, on_delete=models.CASCADE,related_name='image_product')
-    Image = models.ImageField(verbose_name='Hình Sản Phẩm', upload_to='images/',null=True,blank=True)
+    Product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='image_product')
+    Image = models.ImageField(verbose_name='Hình Sản Phẩm', upload_to='images/', null=True, blank=True)
     Image_URL = models.CharField(max_length=255, verbose_name='Link Hình', blank=True, null=True)
 
-    def __str__(self):
-        return self.Image_URL
+    # def __str__(self):
+    #     return self.Image_URL
 
 
 def slug_pre_save(sender, instance, *args, **kwargs):
