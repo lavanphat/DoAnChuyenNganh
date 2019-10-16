@@ -35,7 +35,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    Brand = models.ForeignKey(Brand, on_delete=models.CASCADE, verbose_name='Thương Hiệu')
+    Brand = models.ForeignKey(Brand, on_delete=models.CASCADE, verbose_name='Thương Hiệu',related_name='product')
     Category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Loại', blank=True, null=True,related_name='product')
     title = models.CharField(max_length=255, verbose_name='Tên Sản Phẩm')
     slug = models.SlugField(verbose_name='Từ Khóa Sản Phẩm', unique=True, blank=True)

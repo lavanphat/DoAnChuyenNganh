@@ -31,6 +31,13 @@ class CategoryViewSet(ModelViewSet):
 
 
 class BrandViewSet(ModelViewSet):
-    serializer_class = BrandSerializer
+    # serializer_class = BrandSerializer
     queryset = Brand.objects.all()
     http_method_names = ['get', ]
+    lookup_field = 'slug'
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return BrandSerializer
+        if self.action == 'retrieve':
+            return ProductInBranSerializer
