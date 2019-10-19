@@ -20,7 +20,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'title', 'Price_New', 'image_product']
+        fields = ['id', 'title', 'slug', 'Price_New', 'image_product']
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -57,3 +57,13 @@ class ProductInBranSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ['id', 'title', 'product']
+
+
+class ProductAllSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['id', 'title', 'url']
+        lookup_field = 'slug'
+        extra_kwargs = {
+            'url': {'lookup_field': 'slug'}
+        }

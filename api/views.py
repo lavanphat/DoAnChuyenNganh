@@ -41,3 +41,15 @@ class BrandViewSet(ModelViewSet):
             return BrandSerializer
         if self.action == 'retrieve':
             return ProductInBranSerializer
+
+
+class ProductViewSet(ModelViewSet):
+    queryset = Product.objects.filter(Active=True)
+    http_method_names = ['get', ]
+    lookup_field = 'slug'
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return ProductAllSerializer
+        if self.action == 'retrieve':
+            return ProductSerializer
