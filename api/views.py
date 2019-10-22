@@ -53,3 +53,26 @@ class ProductViewSet(ModelViewSet):
             return ProductAllSerializer
         if self.action == 'retrieve':
             return ProductSerializer
+
+
+class BillViewSet(ModelViewSet):
+    queryset = Bill.objects.all().order_by('-Date_Create')
+    http_method_names = ['get', 'post', 'delete']
+    lookup_field = 'id'
+
+    # serializer_class = BillWithProductSerializer
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return BillSerializer
+        if self.action == 'retrieve':
+            return BillWithProductSerializer
+        return BillWithProductSerializer
+
+
+class BillProductViewSet(ModelViewSet):
+    queryset = Bill_Product.objects.all().order_by('-Bill')
+    http_method_names = ['get', 'post', 'delete']
+    # lookup_field = 'id'
+    serializer_class = BillProductSerializer
+

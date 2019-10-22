@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from bill.models import Bill, Bill_Product
 from product.models import Banner, Category, Product, Image_Product, Brand
 
 
@@ -20,7 +21,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'title', 'slug', 'Price_New', 'image_product']
+        fields = ['id', 'title', 'slug', 'Decription', 'Price_New', 'image_product']
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -67,3 +68,48 @@ class ProductAllSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'url': {'lookup_field': 'slug'}
         }
+
+
+class BillProductSerializer(serializers.ModelSerializer):
+    # Product = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Bill_Product
+        fields = [ 'id','Bill', 'Product', 'Quality', ]
+
+    # def get_Product(self, obj):
+    #     return obj.Product.title
+
+
+class BillSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Bill
+        fields = ['url', 'Date_Create', 'Total_Money', 'Sale', 'Address', 'Phone', 'Active', 'user', ]
+        lookup_field = 'id'
+        extra_kwargs = {
+            'url': {'lookup_field': 'id'}
+        }
+
+    def get_user(self, obj):
+        return obj.User.username
+
+
+class BillWithProductSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+    product = BillProductSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Bill
+        fields = ['url', 'Date_Create', 'Total_Money', 'Sale', 'Address', 'Phone', 'product', 'Active', 'user', ]
+        lookup_field = 'id'
+        extra_kwargs = {
+            'url': {'lookup_field': 'id'}
+        }
+
+    def get_user(self, obj):
+        return obj.User.username
+
+    def get_product(self, obj):
+        return obj.Product.title
