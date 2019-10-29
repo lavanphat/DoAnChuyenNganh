@@ -11,7 +11,9 @@ router.register('brand', BrandViewSet, base_name='brand')
 router.register('product-all', ProductViewSet, base_name='product')
 router.register('bill', BillViewSet, base_name='bill')
 router.register('bill-product', BillProductViewSet, base_name='bill product')
+router.register('voucher', VoucherViewSet, base_name='voucher')
 
 urlpatterns = [
     path('', include(router.urls)),
+    # path('voucher/',VoucherAPIView.as_view())
 ]
