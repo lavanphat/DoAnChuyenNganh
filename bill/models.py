@@ -19,7 +19,7 @@ class Bill(models.Model):
         ('has_delivered', 'Đã giao'),
         ('cancelled', 'Đã hủy'),
         ('returns', 'Trả hàng')
-    ))
+    ), default='processing')
     Active = models.BooleanField(default=True)
 
     # def __str__(self):
