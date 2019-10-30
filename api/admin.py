@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from api.models import Voucher
+from api.models import *
 
 
 class VoucherAdmin(admin.ModelAdmin):
@@ -9,3 +9,4 @@ class VoucherAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Voucher, VoucherAdmin)
+admin.site.register(ProfileUser)
