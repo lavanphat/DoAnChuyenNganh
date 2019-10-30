@@ -1,6 +1,5 @@
 # Create your views here.
-from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet, ViewSet
+from rest_framework.viewsets import ModelViewSet
 
 from api.serializers import *
 
@@ -77,11 +76,8 @@ class BillProductViewSet(ModelViewSet):
     serializer_class = BillProductSerializer
 
 
-class VoucherViewSet(ViewSet):
-    def list(self, request):
-        context = [
-            {'code': 'GIAMGIA5K', 'sale': 5000},
-            {'code': 'GIAMGIA10K', 'sale': 10000},
-            {'code': 'GIAMGIA15K', 'sale': 15000},
-        ]
-        return Response(context)
+class VoucherViewSet(ModelViewSet):
+    queryset = Voucher.objects.filter(active=True)
+    http_method_names = ['get', 'post']
+    serializer_class = VoucherSerializer
+    lookup_field = 'id'

@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from api.models import Voucher
 from bill.models import Bill, Bill_Product
 from product.models import Banner, Category, Product, Image_Product, Brand
 
@@ -75,7 +76,7 @@ class BillProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Bill_Product
-        fields = [ 'id','Bill', 'Product', 'Quality', ]
+        fields = ['id', 'Bill', 'Product', 'Quality', ]
 
     # def get_Product(self, obj):
     #     return obj.Product.title
@@ -113,3 +114,13 @@ class BillWithProductSerializer(serializers.ModelSerializer):
 
     def get_product(self, obj):
         return obj.Product.title
+
+
+class VoucherSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Voucher
+        fields = ['url', 'code', 'sale']
+        lookup_field = 'id'
+        extra_kwargs = {
+            'url': {'lookup_field': 'id'}
+        }

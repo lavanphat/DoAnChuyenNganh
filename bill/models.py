@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 from product.models import Product, Service
@@ -10,8 +9,7 @@ class Bill(models.Model):
     User = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Người Tạo', blank=True, null=True)
     Date_Create = models.DateTimeField(auto_now_add=True, verbose_name='Ngày Tạo')
     Total_Money = models.DecimalField(decimal_places=0, max_digits=10, verbose_name='Tổng Tiền', default=0)
-    Sale = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(0)], default=0,
-                               verbose_name='Giảm Giá')
+    Sale = models.IntegerField(default=0, verbose_name='Giảm Giá')
     Address = models.CharField(max_length=255, verbose_name='Địa Chỉ Nhận', blank=True, null=True)
     Phone = models.CharField(max_length=10, verbose_name='Số Điện Thoại', blank=True, null=True)
     Status_Bill = models.CharField(max_length=50, choices=(
@@ -47,4 +45,3 @@ class Bill_Service(models.Model):
 
     class Meta:
         verbose_name_plural = 'Hóa Đơn Dịch Vụ'
-
