@@ -8,7 +8,7 @@ from product.models import Product, Service
 class Bill(models.Model):
     User = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Người Tạo', blank=True, null=True)
     Date_Create = models.DateTimeField(auto_now_add=True, verbose_name='Ngày Tạo')
-    Total_Money = models.DecimalField(decimal_places=2, max_digits=10, verbose_name='Tổng Tiền', default=0)
+    Total_Money = models.DecimalField(decimal_places=1, max_digits=10, verbose_name='Tổng Tiền', default=0)
     Sale = models.IntegerField(default=0, verbose_name='Giảm Giá')
     Address = models.CharField(max_length=255, verbose_name='Địa Chỉ Nhận', blank=True, null=True)
     Phone = models.CharField(max_length=10, verbose_name='Số Điện Thoại', blank=True, null=True)

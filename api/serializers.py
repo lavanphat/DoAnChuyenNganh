@@ -72,14 +72,14 @@ class ProductAllSerializer(serializers.ModelSerializer):
 
 
 class BillProductSerializer(serializers.ModelSerializer):
-    # Product = serializers.SerializerMethodField()
+    Product = serializers.SerializerMethodField()
 
     class Meta:
         model = Bill_Product
         fields = ['id', 'Bill', 'Product', 'Quality', ]
 
-    # def get_Product(self, obj):
-    #     return obj.Product.title
+    def get_Product(self, obj):
+        return obj.Product.title
 
 
 class BillSerializer(serializers.ModelSerializer):
@@ -121,8 +121,8 @@ class BillWithProductSerializer(serializers.ModelSerializer):
         else:
             return 'null'
 
-    def get_product(self, obj):
-        return obj.Product.title
+    # def get_product(self, obj):
+    #     return obj.Product.title
 
 
 class VoucherSerializer(serializers.ModelSerializer):
