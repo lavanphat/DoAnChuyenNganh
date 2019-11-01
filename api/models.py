@@ -10,5 +10,8 @@ class Voucher(models.Model):
 
 
 class ProfileUser(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     image = models.ImageField(upload_to='avata/')
+
+    def all(self):
+        return ProfileUser.objects.all()

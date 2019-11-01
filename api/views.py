@@ -81,3 +81,22 @@ class VoucherViewSet(ModelViewSet):
     http_method_names = ['get', 'post']
     serializer_class = VoucherSerializer
     lookup_field = 'id'
+
+
+class UserViewSet(ModelViewSet):
+    queryset = User.objects.all()
+    # serializer_class = UserSerializer
+    http_method_names = ['get', 'post', 'put']
+    lookup_field = 'id'
+
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return UserPostSerializer
+        elif self.action == 'update':
+            return UserPutSerializer
+        return UserPostSerializer
+
+
+class ProfileUserViewSet(ModelViewSet):
+    queryset = ProfileUser.objects.all()
+    serializer_class = ProfileUserSerializer

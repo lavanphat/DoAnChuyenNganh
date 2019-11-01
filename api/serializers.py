@@ -1,6 +1,8 @@
+from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
 
-from api.models import Voucher
+from api.models import Voucher, ProfileUser
 from bill.models import Bill, Bill_Product
 from product.models import Banner, Category, Product, Image_Product, Brand
 
@@ -133,3 +135,49 @@ class VoucherSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'url': {'lookup_field': 'id'}
         }
+
+
+class ProfileUserSerializer(serializers.ModelSerializer):
+    # user = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ProfileUser
+        fields = ['id', 'image']
+
+    # def get_user(self, obj):
+    #     if obj.User:
+    #         return obj.User.username
+    #     else:
+    #         return 'null'
+
+
+class UserPutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['url', 'username', 'password', 'first_name', 'last_name', 'email']
+        # fields = ""
+        lookup_field = 'id'
+        extra_kwargs = {
+            'url': {'lookup_field': 'id'},
+            'username': {'read_only': 'true'}
+        }
+
+
+class UserPostSerializer(serializers.ModelSerializer):
+    profile = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ['url', 'username', 'password', 'first_name', 'last_name', 'email', 'profile']
+        lookup_field = 'id'
+        extra_kwargs = {
+            'url': {'lookup_field': 'id'},
+        }
+
+    def get_profile(self, obj):
+        try:
+            serializer = ProfileUserSerializer(obj.profile.all(), many=True)
+            print(serializer.data[0]['image'])
+            return serializer.data
+        except ObjectDoesNotExist:
+            return 'null'
