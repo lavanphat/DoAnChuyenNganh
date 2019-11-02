@@ -84,7 +84,7 @@ class VoucherViewSet(ModelViewSet):
 
 
 class UserViewSet(ModelViewSet):
-    queryset = User.objects.all()
+    # queryset = User.objects.all()
     # serializer_class = UserSerializer
     http_method_names = ['get', 'post', 'put']
     lookup_field = 'id'
@@ -95,6 +95,15 @@ class UserViewSet(ModelViewSet):
         elif self.action == 'update':
             return UserPutSerializer
         return UserPostSerializer
+
+    def get_queryset(self):
+        queryset = User.objects.all()
+        user = self.request.query_params.get('username')
+        password = self.request.query_params.get('password')
+
+        if user and password:
+            queryset = User.objects.filter(username__exact=user, password__exact=password)
+        return queryset
 
 
 class ProfileUserViewSet(ModelViewSet):
