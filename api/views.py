@@ -96,6 +96,8 @@ class UserViewSet(ModelViewSet):
             return UserPostSerializer
         elif self.action == 'update':
             return UserPutSerializer
+        elif self.action == 'retrieve':
+            return UserPutSerializer
         return UserPostSerializer
 
     def get_queryset(self):
