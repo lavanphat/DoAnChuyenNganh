@@ -122,7 +122,7 @@ class LoginView(APIView):
         if username and password:
             user_obj = User.objects.filter(username__iexact=username)
             if user_obj.exists() and user_obj.first().check_password(password):
-                user = LoginSerializer(user_obj,many=True)
+                user = LoginSerializer(user_obj, many=True)
                 data_list = {}
                 data_list.update(user.data[0])
                 return Response({'message': 'login success', 'data': data_list})

@@ -184,6 +184,16 @@ class UserPostSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializer(serializers.ModelSerializer):
+    profile = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ['username', 'password', 'first_name', 'last_name', 'email']
+        fields = ['username', 'password', 'first_name', 'last_name', 'email', 'profile']
+
+    def get_profile(self, obj):
+        try:
+            serializer = ProfileUserSerializer(obj.profile.all(), many=True)
+            print(serializer.data[0]['image'])
+            return serializer.data
+        except ObjectDoesNotExist:
+            return 'null'
