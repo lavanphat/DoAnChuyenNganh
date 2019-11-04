@@ -17,5 +17,5 @@ router.register('user-profile', ProfileUserViewSet, base_name='user-profile')
 
 urlpatterns = [
     path('', include(router.urls)),
-    # path('voucher/',VoucherAPIView.as_view())
+    path('login/', LoginView.as_view()),
 ]

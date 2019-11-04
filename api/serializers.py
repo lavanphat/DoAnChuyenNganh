@@ -181,3 +181,9 @@ class UserPostSerializer(serializers.ModelSerializer):
             return serializer.data
         except ObjectDoesNotExist:
             return 'null'
+
+
+class LoginSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'password', 'first_name', 'last_name', 'email']

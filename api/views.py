@@ -1,4 +1,6 @@
 # Create your views here.
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from api.serializers import *
@@ -109,3 +111,22 @@ class UserViewSet(ModelViewSet):
 class ProfileUserViewSet(ModelViewSet):
     queryset = ProfileUser.objects.all()
     serializer_class = ProfileUserSerializer
+
+
+class LoginView(APIView):
+    serializer_class = LoginSerializer
+
+    def post(self, request):
+        username = request.data.get('username', None)
+        password = request.data.get('password', None)
+        if username and password:
+            user_obj = User.objects.filter(username__iexact=username)
+            if user_obj.exists() and user_obj.first().check_password(password):
+                user = LoginSerializer(user_obj,many=True)
+                data_list = {}
+                data_list.update(user.data[0])
+                return Response({'message': 'login success', 'data': data_list})
+            else:
+                return Response({'message': 'login failed'})
+        else:
+            return Response({'message': 'form invalid'})
