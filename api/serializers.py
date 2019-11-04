@@ -152,15 +152,25 @@ class ProfileUserSerializer(serializers.ModelSerializer):
 
 
 class UserPutSerializer(serializers.ModelSerializer):
+    profile = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ['url', 'username', 'password', 'first_name', 'last_name', 'email']
+        fields = ['username', 'password', 'first_name', 'last_name', 'email', 'profile']
         # fields = ""
-        lookup_field = 'id'
-        extra_kwargs = {
-            'url': {'lookup_field': 'id'},
-            'username': {'read_only': 'true'}
-        }
+        # lookup_field = 'id'
+        # extra_kwargs = {
+        #     'url': {'lookup_field': 'id'},
+        #     'username': {'read_only': 'true'}
+        # }
+
+    def get_profile(self, obj):
+        try:
+            serializer = ProfileUserSerializer(obj.profile.all(), many=True)
+            print(serializer.data[0]['image'])
+            return serializer.data
+        except ObjectDoesNotExist:
+            return 'null'
 
 
 class UserPostSerializer(serializers.ModelSerializer):

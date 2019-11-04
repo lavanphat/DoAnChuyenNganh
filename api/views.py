@@ -136,7 +136,6 @@ class LoginView(APIView):
                         }
                     ]
                 }
-                # data_list.update(user.data[0])
                 return Response(data_list)
             else:
                 return Response({'message': 'login failed'})
