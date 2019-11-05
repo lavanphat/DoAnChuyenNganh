@@ -192,6 +192,13 @@ class UserPostSerializer(serializers.ModelSerializer):
         except ObjectDoesNotExist:
             return 'null'
 
+    def create(self, validated_data):
+        user = super(UserPostSerializer, self).create(validated_data)
+        user.set_password(validated_data['password'])
+        user.is_staff = True
+        user.save()
+        return user
+
 
 class LoginSerializer(serializers.ModelSerializer):
     profile = serializers.SerializerMethodField()
