@@ -12,6 +12,11 @@ class Voucher(models.Model):
 class ProfileUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     image = models.ImageField(upload_to='avata/')
+    phone = models.CharField(max_length=10, null=True, blank=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
 
     def all(self):
         return ProfileUser.objects.all()
+
+    def __str__(self):
+        return self.user.username
