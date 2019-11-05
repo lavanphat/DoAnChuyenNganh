@@ -125,18 +125,24 @@ class LoginView(APIView):
             user_obj = User.objects.filter(username__iexact=username)
             if user_obj.exists() and user_obj.first().check_password(password):
                 user = LoginSerializer(user_obj, many=True)
+
+                try:
+                    profile = [
+                        {
+                            "id": user.data[0]['profile'][0]['id'],
+                            "image": user.data[0]['profile'][0]['image']
+                        }
+                    ]
+                except TypeError:
+                    profile = []
+
                 data_list = {
                     'username': user.data[0]['username'],
                     "password": user.data[0]['password'],
                     "first_name": user.data[0]['first_name'],
                     "last_name": user.data[0]['last_name'],
                     "email": user.data[0]['email'],
-                    "profile": [
-                        {
-                            "id": user.data[0]['profile'][0]['id'],
-                            "image": user.data[0]['profile'][0]['image']
-                        }
-                    ]
+                    "profile": profile
                 }
                 return Response(data_list)
             else:
