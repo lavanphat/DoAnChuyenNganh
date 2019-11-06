@@ -142,7 +142,7 @@ class ProfileUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProfileUser
-        fields = '__all__'
+        fields = ['id', 'image', 'phone', 'address']
 
     # def get_user(self, obj):
     #     if obj.User:
