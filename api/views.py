@@ -130,7 +130,9 @@ class LoginView(APIView):
                     profile = [
                         {
                             "id": user.data[0]['profile'][0]['id'],
-                            "image": user.data[0]['profile'][0]['image']
+                            "image": user.data[0]['profile'][0]['image'],
+                            "phone": user.data[0]['profile'][0]['phone'],
+                            "address": user.data[0]['profile'][0]['address'],
                         }
                     ]
                 except TypeError:
