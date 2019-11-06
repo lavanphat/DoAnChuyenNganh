@@ -156,13 +156,13 @@ class UserPutSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id','username', 'password', 'first_name', 'last_name', 'email', 'profile']
+        fields = ['id', 'url', 'username', 'password', 'first_name', 'last_name', 'email', 'profile']
         # fields = ""
-        # lookup_field = 'id'
-        # extra_kwargs = {
-        #     'url': {'lookup_field': 'id'},
-        #     'username': {'read_only': 'true'}
-        # }
+        lookup_field = 'id'
+        extra_kwargs = {
+            'url': {'lookup_field': 'id'},
+            'username': {'read_only': 'true'}
+        }
 
     def get_profile(self, obj):
         try:
