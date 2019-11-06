@@ -156,7 +156,7 @@ class UserPutSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['username', 'password', 'first_name', 'last_name', 'email', 'profile']
+        fields = ['id','username', 'password', 'first_name', 'last_name', 'email', 'profile']
         # fields = ""
         # lookup_field = 'id'
         # extra_kwargs = {
