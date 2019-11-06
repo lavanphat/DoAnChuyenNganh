@@ -103,10 +103,9 @@ class UserViewSet(ModelViewSet):
     def get_queryset(self):
         queryset = User.objects.all()
         user = self.request.query_params.get('username')
-        password = self.request.query_params.get('password')
 
-        if user and password:
-            queryset = User.objects.filter(username__exact=user, password__exact=password)
+        if user:
+            queryset = User.objects.filter(username__exact=user)
         return queryset
 
 
@@ -139,6 +138,7 @@ class LoginView(APIView):
                     profile = []
 
                 data_list = {
+                    'id': user.data[0]['id'],
                     'username': user.data[0]['username'],
                     "password": user.data[0]['password'],
                     "first_name": user.data[0]['first_name'],

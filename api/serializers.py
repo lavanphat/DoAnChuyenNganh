@@ -205,7 +205,7 @@ class LoginSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['username', 'password', 'first_name', 'last_name', 'email', 'profile']
+        fields = ['id', 'username', 'password', 'first_name', 'last_name', 'email', 'profile']
 
     def get_profile(self, obj):
         try:
