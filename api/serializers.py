@@ -85,24 +85,24 @@ class BillProductSerializer(serializers.ModelSerializer):
 
 
 class BillSerializer(serializers.ModelSerializer):
-    user = serializers.SerializerMethodField()
+    # user = serializers.SerializerMethodField(read_only=True)
 
-    Status_Bill = serializers.CharField(source='get_Status_Bill_display')
+    Status_Bill = serializers.CharField(source='get_Status_Bill_display', read_only=True)
 
     class Meta:
         model = Bill
         fields = ['url', 'Date_Create', 'Total_Money', 'Sale', 'Address', 'Phone', 'Status_Bill', 'Active',
-                  'user', ]
+                  'User']
         lookup_field = 'id'
         extra_kwargs = {
             'url': {'lookup_field': 'id'}
         }
 
-    def get_user(self, obj):
-        if obj.User:
-            return obj.User.username
-        else:
-            return 'null'
+    # def get_user(self, obj):
+    #     if obj.User:
+    #         return obj.User.username
+    #     else:
+    #         return 'null'
 
 
 class BillWithProductSerializer(serializers.ModelSerializer):

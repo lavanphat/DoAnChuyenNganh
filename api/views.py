@@ -1,4 +1,5 @@
 # Create your views here.
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
@@ -69,6 +70,19 @@ class BillViewSet(ModelViewSet):
         if self.action == 'retrieve':
             return BillWithProductSerializer
         return BillWithProductSerializer
+
+    def create(self, request, *args, **kwargs):
+        bill = BillSerializer(data=request.data, context={'request': request})
+        # user = User.objects.get(username__iexact=request.data["user"]).pk
+        if bill.is_valid():
+            bill.User = request.data['User']
+            bill.save()
+            return Response(bill.data, status=status.HTTP_201_CREATED)
+        return Response(bill.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # def perform_create(self, serializer):
+    #     serializer.validated_data['User'] = self.request.user
+    #     return super(BillViewSet, self).perform_create(serializer)
 
 
 class BillProductViewSet(ModelViewSet):
