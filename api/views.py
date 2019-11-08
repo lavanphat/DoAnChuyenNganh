@@ -83,9 +83,10 @@ class BillViewSet(ModelViewSet):
     def get_queryset(self):
         queryset = Bill.objects.all().order_by('-Date_Create')
         user = self.request.query_params.get('User')
+        status_bill = self.request.query_params.get('Status_Bill')
 
         if user:
-            queryset = Bill.objects.filter(User=user).order_by('-Date_Create')
+            queryset = Bill.objects.filter(User=user, Status_Bill__iexact=status_bill).order_by('-Date_Create')
         return queryset
     # def perform_create(self, serializer):
     #     serializer.validated_data['User'] = self.request.user
