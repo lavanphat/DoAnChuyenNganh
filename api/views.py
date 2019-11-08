@@ -58,14 +58,14 @@ class ProductViewSet(ModelViewSet):
 
 
 class BillViewSet(ModelViewSet):
-    queryset = Bill.objects.all().order_by('-Date_Create')
+    # queryset = Bill.objects.all().order_by('-Date_Create')
     http_method_names = ['get', 'post', 'delete']
     lookup_field = 'id'
 
     # serializer_class = BillWithProductSerializer
 
     def get_serializer_class(self):
-        if self.action == 'list':
+        if self.action == 'list' or self.action == 'create':
             return BillSerializer
         if self.action == 'retrieve':
             return BillWithProductSerializer
@@ -75,11 +75,18 @@ class BillViewSet(ModelViewSet):
         bill = BillSerializer(data=request.data, context={'request': request})
         # user = User.objects.get(username__iexact=request.data["user"]).pk
         if bill.is_valid():
-            bill.User = request.data['User']
+            bill.User = request.POST.get('User')
             bill.save()
             return Response(bill.data, status=status.HTTP_201_CREATED)
         return Response(bill.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def get_queryset(self):
+        queryset = Bill.objects.all().order_by('-Date_Create')
+        user = self.request.query_params.get('User')
+
+        if user:
+            queryset = Bill.objects.filter(User=user).order_by('-Date_Create')
+        return queryset
     # def perform_create(self, serializer):
     #     serializer.validated_data['User'] = self.request.user
     #     return super(BillViewSet, self).perform_create(serializer)
