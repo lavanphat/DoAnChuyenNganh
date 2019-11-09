@@ -94,10 +94,18 @@ class BillViewSet(ModelViewSet):
 
 
 class BillProductViewSet(ModelViewSet):
-    queryset = Bill_Product.objects.all().order_by('-Bill')
+    # queryset = Bill_Product.objects.all().order_by('-Bill')
     http_method_names = ['get', 'post', 'delete']
     # lookup_field = 'id'
     serializer_class = BillProductSerializer
+
+    def get_queryset(self):
+        queryset = Bill_Product.objects.all().order_by('-Bill')
+        bill = self.request.query_params.get('Bill')
+
+        if bill:
+            queryset = Bill_Product.objects.filter(Bill__exact=bill).order_by('-Bill')
+        return queryset
 
 
 class VoucherViewSet(ModelViewSet):
