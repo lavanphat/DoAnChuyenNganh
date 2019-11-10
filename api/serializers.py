@@ -74,14 +74,18 @@ class ProductAllSerializer(serializers.ModelSerializer):
 
 
 class BillProductSerializer(serializers.ModelSerializer):
-    Product = serializers.SerializerMethodField()
+    # product = ProductSerializer(many=True,read_only=True)
+    slug = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Bill_Product
-        fields = ['id', 'Bill', 'Product', 'Quality', ]
+        fields = ['id', 'Bill', 'Product', 'Quality', 'slug']
 
-    def get_Product(self, obj):
-        return obj.Product.title
+    # def get_Product(self, obj):
+    #     return obj.Product.title
+
+    def get_slug(self, obj):
+        return obj.Product.slug
 
 
 class BillSerializer(serializers.ModelSerializer):

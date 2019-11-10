@@ -31,7 +31,7 @@ class Bill(models.Model):
 
 class Bill_Product(models.Model):
     Bill = models.ForeignKey(Bill, on_delete=models.CASCADE, related_name='product')
-    Product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Sản Phẩm')
+    Product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Sản Phẩm', related_name='product')
     Quality = models.IntegerField(default=1, verbose_name='Số Lượng')
 
     class Meta:
