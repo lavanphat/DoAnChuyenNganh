@@ -112,10 +112,12 @@ class BillSerializer(serializers.ModelSerializer):
 class BillWithProductSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
     product = BillProductSerializer(many=True, read_only=True)
+    Status_Bill = serializers.CharField(source='get_Status_Bill_display', read_only=True)
 
     class Meta:
         model = Bill
-        fields = ['url', 'Date_Create', 'Total_Money', 'Sale', 'Address', 'Phone', 'product', 'Active', 'user', ]
+        fields = ['url', 'Date_Create', 'Total_Money', 'Sale', 'Address', 'Phone', 'product', 'Status_Bill', 'Active',
+                  'user', ]
         lookup_field = 'id'
         extra_kwargs = {
             'url': {'lookup_field': 'id'}
