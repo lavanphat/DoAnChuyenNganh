@@ -181,3 +181,9 @@ class LoginView(APIView):
                 return Response({'message': 'login failed'})
         else:
             return Response({'message': 'form invalid'})
+
+
+class SearchViewSet(ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = SearchSerializer
+    http_method_names = ['get', ]

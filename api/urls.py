@@ -14,6 +14,7 @@ router.register('bill-product', BillProductViewSet, base_name='bill product')
 router.register('voucher', VoucherViewSet, base_name='voucher')
 router.register('user', UserViewSet, base_name='user')
 router.register('user-profile', ProfileUserViewSet, base_name='user-profile')
+router.register('search', SearchViewSet, base_name='search')
 
 urlpatterns = [
     path('', include(router.urls)),

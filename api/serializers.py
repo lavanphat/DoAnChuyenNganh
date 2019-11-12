@@ -220,3 +220,10 @@ class LoginSerializer(serializers.ModelSerializer):
             return serializer.data
         except ObjectDoesNotExist:
             return 'null'
+
+
+class SearchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['title', 'slug']
+
