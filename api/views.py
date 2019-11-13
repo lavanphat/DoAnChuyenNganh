@@ -185,5 +185,5 @@ class LoginView(APIView):
 
 class SearchViewSet(ModelViewSet):
     queryset = Product.objects.all()
-    serializer_class = SearchSerializer
+    serializer_class = ProductSerializer
     http_method_names = ['get', ]
