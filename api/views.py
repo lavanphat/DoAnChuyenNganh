@@ -1,5 +1,7 @@
 # Create your views here.
+from django_filters import rest_framework as filters
 from rest_framework import status
+from rest_framework.filters import OrderingFilter
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
@@ -183,7 +185,19 @@ class LoginView(APIView):
             return Response({'message': 'form invalid'})
 
 
+class SearchFilter(filters.FilterSet):
+    class Meta:
+        model = Product
+        fields = {
+            'title': ['icontains'],
+            'Price_New': ['gte', 'lte']
+        }
+
+
 class SearchViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     http_method_names = ['get', ]
+    filter_backends = [OrderingFilter, filters.DjangoFilterBackend]
+    filterset_class = SearchFilter
+    ordering_fields = ['Price_New', ]
