@@ -233,5 +233,5 @@ class NotificationsViewSet(ModelViewSet):
                     }
                 }
             )
-            print(response['publishId'])
+            return Response(notifications.data, status=status.HTTP_201_CREATED)
         return Response(notifications.errors, status=status.HTTP_400_BAD_REQUEST)
