@@ -3,6 +3,7 @@ from django_filters import rest_framework as filters
 from pusher_push_notifications import PushNotifications
 from rest_framework import status
 from rest_framework.filters import OrderingFilter
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
@@ -207,6 +208,7 @@ class SearchViewSet(ModelViewSet):
 class NotificationsViewSet(ModelViewSet):
     http_method_names = ['post', ]
     serializer_class = NotificationsSerializer
+    permission_classes = [IsAdminUser]
 
     def create(self, request, *args, **kwargs):
         notifications = NotificationsSerializer(data=request.data, context={'request': request})
