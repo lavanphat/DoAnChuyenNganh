@@ -1,5 +1,6 @@
 # Create your views here.
 from django_filters import rest_framework as filters
+from pusher_push_notifications import PushNotifications
 from rest_framework import status
 from rest_framework.filters import OrderingFilter
 from rest_framework.response import Response
@@ -201,3 +202,34 @@ class SearchViewSet(ModelViewSet):
     filter_backends = [OrderingFilter, filters.DjangoFilterBackend]
     filterset_class = SearchFilter
     ordering_fields = ['Price_New', ]
+
+
+class NotificationsViewSet(ModelViewSet):
+    http_method_names = ['post', ]
+    serializer_class = NotificationsSerializer
+
+    def create(self, request, *args, **kwargs):
+        notifications = NotificationsSerializer(data=request.data, context={'request': request})
+        if notifications.is_valid():
+            beams_client = PushNotifications(
+                instance_id='746eae18-a178-4f92-9bf7-61fd8cbaff9e',
+                secret_key='84FCCBE1590FC5652373F9860C04F7BCD809DE04CCBE63D451E4F81043B13FDE',
+            )
+            response = beams_client.publish_to_interests(
+                interests=['hello'],
+                publish_body={
+                    'apns': {
+                        'aps': {
+                            'alert': 'Notifications created!'
+                        }
+                    },
+                    'fcm': {
+                        'notification': {
+                            'title': request.POST.get('title'),
+                            'body': request.POST.get('content')
+                        }
+                    }
+                }
+            )
+            print(response['publishId'])
+        return Response(notifications.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'django_filters',
+    'pusher_push_notifications'
 ]
 
 MIDDLEWARE = [

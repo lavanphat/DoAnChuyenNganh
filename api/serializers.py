@@ -222,3 +222,6 @@ class LoginSerializer(serializers.ModelSerializer):
             return 'null'
 
 
+class NotificationsSerializer(serializers.Serializer):
+    title = serializers.CharField(required=True, max_length=100)
+    content = serializers.CharField(required=True, max_length=500)

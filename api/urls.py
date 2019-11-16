@@ -15,6 +15,7 @@ router.register('voucher', VoucherViewSet, base_name='voucher')
 router.register('user', UserViewSet, base_name='user')
 router.register('user-profile', ProfileUserViewSet, base_name='user-profile')
 router.register('search', SearchViewSet, base_name='search')
+router.register('notifications', NotificationsViewSet, base_name='notifications')
 
 urlpatterns = [
     path('', include(router.urls)),
