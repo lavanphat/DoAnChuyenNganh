@@ -10,3 +10,4 @@ class VoucherAdmin(admin.ModelAdmin):
 
 admin.site.register(Voucher, VoucherAdmin)
 admin.site.register(ProfileUser)
+admin.site.register(Favorite)

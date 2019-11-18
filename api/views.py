@@ -3,7 +3,7 @@ from django_filters import rest_framework as filters
 from pusher_push_notifications import PushNotifications
 from rest_framework import status
 from rest_framework.filters import OrderingFilter
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
@@ -235,3 +235,16 @@ class NotificationsViewSet(ModelViewSet):
             )
             return Response(notifications.data, status=status.HTTP_201_CREATED)
         return Response(notifications.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class FavoriteViewSet(ModelViewSet):
+    http_method_names = ['get', 'post', 'delete']
+    serializer_class = FavoriteSerializer
+
+    def get_queryset(self):
+        queryset = Favorite.objects.all()
+        user = self.request.query_params.get('user')
+
+        if user:
+            queryset = Favorite.objects.filter(user__exact=user)
+        return queryset

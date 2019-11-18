@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
 
-from api.models import Voucher, ProfileUser
+from api.models import Voucher, ProfileUser, Favorite
 from bill.models import Bill, Bill_Product
 from product.models import Banner, Category, Product, Image_Product, Brand
 
@@ -225,3 +225,9 @@ class LoginSerializer(serializers.ModelSerializer):
 class NotificationsSerializer(serializers.Serializer):
     title = serializers.CharField(required=True, max_length=100)
     content = serializers.CharField(required=True, max_length=500)
+
+
+class FavoriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Favorite
+        fields = '__all__'
