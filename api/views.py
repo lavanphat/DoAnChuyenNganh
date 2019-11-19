@@ -244,7 +244,10 @@ class FavoriteViewSet(ModelViewSet):
     def get_queryset(self):
         queryset = Favorite.objects.all()
         user = self.request.query_params.get('user')
+        product = self.request.query_params.get('product')
 
         if user:
             queryset = Favorite.objects.filter(user__exact=user)
+            if product:
+                queryset = Favorite.objects.filter(user__exact=user, product__exact=product)
         return queryset
